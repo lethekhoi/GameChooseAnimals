@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
@@ -88,4 +89,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == Request_Code_Animal && resultCode == RESULT_OK && data != null) {
+            int valueHinhChon = data.getIntExtra("valueHinh", -1);
+            int time = data.getIntExtra("currentTime", -1);
+            mTxtTime.setText("Time : " + 1);
+            mCurrentime = 0;
+            mImgHinhChon.setImageResource(valueHinhChon);
+            if (valueHinhChon == mValueHinhGoc) {
+                Toast.makeText(this, "Chinh xac", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        randomImage();
+                        countDownTime(0);
+                    }
+                }, 1000);
+            } else {
+                Toast.makeText(this, "Sai roi", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == Request_Code_Animal && resultCode == RESULT_CANCELED) {
+
+            mTxtTime.setText("Time : " + 1);
+            mCurrentime = 0;
+            Toast.makeText(this, "Sai roi", Toast.LENGTH_SHORT).show();
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

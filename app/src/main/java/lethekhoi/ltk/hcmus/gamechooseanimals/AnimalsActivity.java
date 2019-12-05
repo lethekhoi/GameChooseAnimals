@@ -46,9 +46,10 @@ public class AnimalsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent1 = new Intent();
                         intent1.putExtra("currentTime", mCurrentime);
-                        intent1.putExtra("valuehinh", Integer.parseInt(imageView.getTag().toString()));
+                        intent1.putExtra("valueHinh", Integer.parseInt(imageView.getTag().toString()));
                         setResult(RESULT_OK, intent1);
-
+                        mHandler.removeCallbacks(runnable);
+                        finish();
                     }
                 });
                 tableRow.addView(imageView);
